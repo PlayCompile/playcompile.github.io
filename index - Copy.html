@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif; /* Replace with your preferred font */
+    }
+    /* Basic styles for the button */
+    .menu-button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: none;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    /* Dropdown container styling */
+    .dropdown {
+      display: none;
+      position: absolute;
+      background-color: white;
+      border: 1px solid #ccc;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      padding: 10px;
+      z-index: 1000;
+    }
+
+    /* Display dropdown on hover of the menu item */
+    .menu-item:hover .dropdown {
+      display: block;
+    }
+
+    /* List styles */
+    .menu-list {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+    }
+
+.menu-link {
+margin-left: 8%;
+      font-weight: bold;
+}
+
+    .menu-list li {
+      margin-right: 20px;
+ list-style-type: none;
+
+    }
+
+    .menu-list li a {
+      text-decoration: none;
+      color: #333;
+      padding: 8px 15px;
+margin-left: -20px;
+      display: block;
+    }
+
+    /* Hover effect for each menu item */
+    .menu-list li a:hover {
+      background-color: #f0f0f0; /* Light gray background on hover */
+      color: #0073e6; /* Optional: Change text color on hover */
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="header-menu">
+    <ul class="menu-list">
+      <!-- Home Menu Item -->
+      <li class="menu-link"><a href="/">Home</a></li>
+      <li class="menu-link"><a href="/">About PlayCompile</a></li>
+
+      <li class="menu-item">
+        <button class="menu-button">PlayCompile
+          <svg aria-hidden="true" height="16" viewBox="0 0 16 16" width="16" class="menu-icon">
+            <path d="M12.78 5.22a.749.749 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.06 0L3.22 6.28a.749.749 0 1 1 1.06-1.06L8 8.939l3.72-3.719a.749.749 0 0 1 1.06 0Z"></path>
+          </svg>
+        </button>
+        <div class="dropdown">
+          <ul>
+            <li><a href="/sponsors">Twitch</a></li>
+            <li><a href="/explore">YouTube</a></li>
+            <li><a href="/topics">Github</a></li>
+            <li><a href="/topics">Discord</a></li>
+          </ul>
+        </div>
+
+      <li class="menu-item">
+        <button class="menu-button">Tutorials
+          <svg aria-hidden="true" height="16" viewBox="0 0 16 16" width="16" class="menu-icon">
+            <path d="M12.78 5.22a.749.749 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.06 0L3.22 6.28a.749.749 0 1 1 1.06-1.06L8 8.939l3.72-3.719a.749.749 0 0 1 1.06 0Z"></path>
+          </svg>
+        </button>
+        <div class="dropdown">
+          <ul>
+            <li><a href="/sponsors">GitHub Sponsors</a></li>
+            <li><a href="/explore">Explore</a></li>
+            <li><a href="/topics">Topics</a></li>
+          </ul>
+        </div>
+</li>
+
+      <li class="menu-item">
+        <button class="menu-button">Project files
+          <svg aria-hidden="true" height="16" viewBox="0 0 16 16" width="16" class="menu-icon">
+            <path d="M12.78 5.22a.749.749 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.06 0L3.22 6.28a.749.749 0 1 1 1.06-1.06L8 8.939l3.72-3.719a.749.749 0 0 1 1.06 0Z"></path>
+          </svg>
+        </button>
+        <div class="dropdown">
+          <ul>
+            <li><a href="/sponsors">GitHub Sponsors</a></li>
+            <li><a href="/explore">Explore</a></li>
+            <li><a href="/topics">Topics</a></li>
+          </ul>
+        </div>
+
+      <li class="menu-item">
+        <button class="menu-button">Game downloads
+          <svg aria-hidden="true" height="16" viewBox="0 0 16 16" width="16" class="menu-icon">
+            <path d="M12.78 5.22a.749.749 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.06 0L3.22 6.28a.749.749 0 1 1 1.06-1.06L8 8.939l3.72-3.719a.749.749 0 0 1 1.06 0Z"></path>
+          </svg>
+        </button>
+        <div class="dropdown">
+          <ul>
+            <li><a href="/sponsors">GitHub Sponsors</a></li>
+            <li><a href="/explore">Explore</a></li>
+            <li><a href="/topics">Topics</a></li>
+          </ul>
+        </div>
+
+      <li class="menu-item">
+        <button class="menu-button">Play games
+          <svg aria-hidden="true" height="16" viewBox="0 0 16 16" width="16" class="menu-icon">
+            <path d="M12.78 5.22a.749.749 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.06 0L3.22 6.28a.749.749 0 1 1 1.06-1.06L8 8.939l3.72-3.719a.749.749 0 0 1 1.06 0Z"></path>
+          </svg>
+        </button>
+        <div class="dropdown">
+          <ul>
+            <li><a href="/sponsors">GitHub Sponsors</a></li>
+            <li><a href="/explore">Explore</a></li>
+            <li><a href="/topics">Topics</a></li>
+          </ul>
+        </div>
+
+      <li class="menu-link"><a href="/">Contact me</a></li>
+
+      </li>
+    </ul>
+  </nav>
+
+</body>
+</html>

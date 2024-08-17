@@ -108,12 +108,13 @@ font-family: 'Montserrat', Arial, sans-serif;
 }
 
 /* Scale the logo to 100% of the parent container height */.menu-logo {
-  height: 100%; /* Makes the logo fill the container's height */width: auto;  /* Maintains the aspect ratio */
+  height: 65px; /* Makes the logo fill the container's height */width: auto;  /* Maintains the aspect ratio */
+  margin-right:12px;
 }
 
 /* Optional: Remove extra space around the logo link */.menu-linka {
   display: inline-block;
-  height: 100%;
+  height: 65px;
 }
   </style>
 </head>
@@ -122,14 +123,91 @@ font-family: 'Montserrat', Arial, sans-serif;
   <source src="website.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
-<div id="menu">
-<script>
-    fetch('../menu.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('menu').innerHTML = data;
-        });
-</script>
+<divclass="menu-container">
+  <nav class="header-menu">
+    <ul class="menu-list">
+      <!-- Home Menu Item -->
+	  <a href="/"><img src="logo.png" class="menu-logo" alt="Home"></a>
+      <li class="menu-link"><a href="/">Home</a></li>
+      <li class="menu-link"><a href="about">About</a></li>
+
+      <li class="menu-item">
+        <button class="menu-button">PlayCompile
+          <svg aria-hidden="true" height="16" viewBox="0 0 16 16" width="16" class="menu-icon">
+            <path d="M12.78 5.22a.749.749 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.06 0L3.22 6.28a.749.749 0 1 1 1.06-1.06L8 8.939l3.72-3.719a.749.749 0 0 1 1.06 0Z"></path>
+          </svg>
+        </button>
+        <div class="dropdown">
+          <ul>
+            <li><a href="https://twitch.tv/playcompile" target="_blank">Twitch</a></li>
+            <li><a href="https://youtube.com/@playcompile" target="_blank">YouTube</a></li>
+            <li><a href="https://github.com/playcompile" target="_blank">GitHub</a></li>
+            <li><a href="https://discord.gg/MF7AnaB9XC" target="_blank">Discord</a></li>
+          </ul>
+        </div>
+
+      <li class="menu-item">
+        <button class="menu-button">Tutorials
+          <svg aria-hidden="true" height="16" viewBox="0 0 16 16" width="16" class="menu-icon">
+            <path d="M12.78 5.22a.749.749 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.06 0L3.22 6.28a.749.749 0 1 1 1.06-1.06L8 8.939l3.72-3.719a.749.749 0 0 1 1.06 0Z"></path>
+          </svg>
+        </button>
+        <div class="dropdown">
+          <ul>
+            <li><a href="/sponsors">Example one</a></li>
+            <li><a href="/explore">Example two</a></li>
+            <li><a href="/topics">Example three</a></li>
+          </ul>
+        </div>
+</li>
+
+      <li class="menu-item">
+        <button class="menu-button">Project files
+          <svg aria-hidden="true" height="16" viewBox="0 0 16 16" width="16" class="menu-icon">
+            <path d="M12.78 5.22a.749.749 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.06 0L3.22 6.28a.749.749 0 1 1 1.06-1.06L8 8.939l3.72-3.719a.749.749 0 0 1 1.06 0Z"></path>
+          </svg>
+        </button>
+        <div class="dropdown">
+          <ul>
+            <li><a href="/sponsors">GitHub Sponsors</a></li>
+            <li><a href="/explore">Explore</a></li>
+            <li><a href="/topics">Topics</a></li>
+          </ul>
+        </div>
+
+      <li class="menu-item">
+        <button class="menu-button">Game downloads
+          <svg aria-hidden="true" height="16" viewBox="0 0 16 16" width="16" class="menu-icon">
+            <path d="M12.78 5.22a.749.749 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.06 0L3.22 6.28a.749.749 0 1 1 1.06-1.06L8 8.939l3.72-3.719a.749.749 0 0 1 1.06 0Z"></path>
+          </svg>
+        </button>
+        <div class="dropdown">
+          <ul>
+            <li><a href="/sponsors">GitHub Sponsors</a></li>
+            <li><a href="/explore">Explore</a></li>
+            <li><a href="/topics">Topics</a></li>
+          </ul>
+        </div>
+
+      <li class="menu-item">
+        <button class="menu-button">Play games
+          <svg aria-hidden="true" height="16" viewBox="0 0 16 16" width="16" class="menu-icon">
+            <path d="M12.78 5.22a.749.749 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.06 0L3.22 6.28a.749.749 0 1 1 1.06-1.06L8 8.939l3.72-3.719a.749.749 0 0 1 1.06 0Z"></path>
+          </svg>
+        </button>
+        <div class="dropdown">
+          <ul>
+            <li><a href="/sponsors">GitHub Sponsors</a></li>
+            <li><a href="/explore">Explore</a></li>
+            <li><a href="/topics">Topics</a></li>
+          </ul>
+        </div>
+
+      <li class="menu-link"><a href="mailto:cappy@playcompile.com">Contact me</a></li>
+
+      </li>
+    </ul>
+  </nav>
 </div>
 </body>
 </html>

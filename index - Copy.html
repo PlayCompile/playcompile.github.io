@@ -1,12 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+<title>PlayCompile | Unity Minigame Tutorials - Playable Demos, Downloads & Live Q&A streams</title>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<!-- Meta Description --><meta name="description" content="Learn to create minigames in Unity with step-by-step tutorials, playable demos, downloadable project files, and live stream Q&A sessions. Perfect for aspiring game developers."><!-- Meta Keywords --><meta name="keywords" content="Unity tutorials, game development, minigames, Unity minigame tutorials, Unity game development, downloadable project files, playable demos, live stream Q&A, PlayCompile"><!-- Author --><meta name="author" content="PlayCompile"><!-- Robots (default is to index and follow) --><meta name="robots" content="index, follow">
+<!-- Social Media Sharing --><!-- Open Graph tags for Facebook --><meta property="og:title" content="Unity Minigame Tutorials - Playable Demos, Downloads & Live Q&A | PlayCompile"><meta property="og:description" content="Learn to create minigames in Unity with step-by-step tutorials, playable demos, downloadable project files, and live stream Q&A sessions."><meta property="og:image" content="logo.png"><meta property="og:url" content="https://playcompile.com"><meta property="og:type" content="website"><!-- Twitter Card tags --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Unity Minigame Tutorials - Playable Demos, Downloads & Live Q&A | PlayCompile"><meta name="twitter:description" content="Learn to create minigames in Unity with step-by-step tutorials, playable demos, downloadable project files, and live stream Q&A sessions."><meta name="twitter:image" content="logo.png">
+<style>
     body {
-      font-family: Arial, sans-serif; /* Replace with your preferred font */
+font-family: 'Montserrat', Arial, sans-serif;
     }
+/* Style for the video background */
+.video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Scales the video to cover the viewport */
+  z-index: -1; /* Places the video behind the content */
+}
+nav
+{
+	background-color: #222;
+font-family: 'Montserrat', Arial, sans-serif;
+	color: #FFF;
+        display: flex; /* Make the nav a flex container */
+        justify-content: center; /* Center the menu items horizontally */
+}
     /* Basic styles for the button */
     .menu-button {
       display: flex;
@@ -15,16 +40,20 @@
       background: none;
       border: none;
       padding: 10px;
+padding-top: 28px;
+padding-bottom: 28px;
       cursor: pointer;
+font-family: 'Montserrat', Arial, sans-serif;
       font-size: 16px;
       font-weight: bold;
+	color: #FFF;
     }
 
     /* Dropdown container styling */
     .dropdown {
       display: none;
       position: absolute;
-      background-color: white;
+      background-color: #000;
       border: 1px solid #ccc;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
       padding: 10px;
@@ -44,9 +73,9 @@
       align-items: center;
     }
 
-.menu-link {
-margin-left: 8%;
-      font-weight: bold;
+.menu-list .menu-link a {
+    color: #FFF !important;
+    font-weight: bold;
 }
 
     .menu-list li {
@@ -57,26 +86,49 @@ margin-left: 8%;
 
     .menu-list li a {
       text-decoration: none;
-      color: #333;
-      padding: 8px 15px;
-margin-left: -20px;
+      color: #aaa;
+      padding: 7px 1px;
+/* margin-left: -30px; */
       display: block;
     }
 
+.menu-icon {
+  fill: white; /* Change this to any color you prefer */
+}
+
     /* Hover effect for each menu item */
     .menu-list li a:hover {
-      background-color: #f0f0f0; /* Light gray background on hover */
+      background-color: #fc9403; /* Light gray background on hover */
       color: #0073e6; /* Optional: Change text color on hover */
     }
+	
+/* Ensure the parent container (menu) has a defined height */.menu-container {
+  height: 60px; /* Example height, adjust as needed */display: flex;
+  align-items: center; /* Vertically center items */
+}
+
+/* Scale the logo to 100% of the parent container height */.menu-logo {
+  height: 100%; /* Makes the logo fill the container's height */width: auto;  /* Maintains the aspect ratio */
+}
+
+/* Optional: Remove extra space around the logo link */.menu-linka {
+  display: inline-block;
+  height: 100%;
+}
   </style>
 </head>
 <body>
-
+<video autoplay muted loop playsinline class="video-background">
+  <source src="website.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+<divclass="menu-container">
   <nav class="header-menu">
     <ul class="menu-list">
       <!-- Home Menu Item -->
+	  <a href="/"><img src="logo.png" class="menu-logo" alt="Home"></a>
       <li class="menu-link"><a href="/">Home</a></li>
-      <li class="menu-link"><a href="/">About PlayCompile</a></li>
+      <li class="menu-link"><a href="about">About</a></li>
 
       <li class="menu-item">
         <button class="menu-button">PlayCompile
@@ -86,10 +138,10 @@ margin-left: -20px;
         </button>
         <div class="dropdown">
           <ul>
-            <li><a href="/sponsors">Twitch</a></li>
-            <li><a href="/explore">YouTube</a></li>
-            <li><a href="/topics">Github</a></li>
-            <li><a href="/topics">Discord</a></li>
+            <li><a href="https://twitch.tv/playcompile" target="_blank">Twitch</a></li>
+            <li><a href="https://youtube.com@playcompile" target="_blank">YouTube</a></li>
+            <li><a href="https://github.com/playcompile" target="_blank">GitHub</a></li>
+            <li><a href="https://discord.gg/MF7AnaB9XC" target="_blank">Discord</a></li>
           </ul>
         </div>
 
@@ -101,9 +153,9 @@ margin-left: -20px;
         </button>
         <div class="dropdown">
           <ul>
-            <li><a href="/sponsors">GitHub Sponsors</a></li>
-            <li><a href="/explore">Explore</a></li>
-            <li><a href="/topics">Topics</a></li>
+            <li><a href="/sponsors">Example one</a></li>
+            <li><a href="/explore">Example two</a></li>
+            <li><a href="/topics">Example three</a></li>
           </ul>
         </div>
 </li>
@@ -155,6 +207,6 @@ margin-left: -20px;
       </li>
     </ul>
   </nav>
-
+</div>
 </body>
 </html>

@@ -5,6 +5,7 @@
 body {
   background-color: black !important; /* Test if CSS is loaded */
     color: #eee;
+	font-size: 18pt;
 }
 
 h1 {

@@ -1,0 +1,56 @@
+<style>
+/* Test background color */
+{ background-color: black !important; /* Test if CSS is loaded */}
+
+body {
+  background-color: black !important; /* Test if CSS is loaded */
+    color: #eee;
+}
+
+h1 {
+	color: #EE8;
+}
+
+H2 {
+	
+}
+
+p {
+	color: #ACC;
+}
+
+/* Link styling */
+a:link {
+  color: #FFA;
+  background-color: rgba(0, 0, 0, 0.8);
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+
+/* Visited link */
+a:visited {
+  color: #EEE;
+}
+
+/* Mouse over link */
+a:hover {
+  color: #ff9933;
+}
+
+/* Selected link */
+a:active {
+  color: #ff9933;
+} 
+
+/* External div styling */
+#external {
+  font-family: 'Montserrat', Arial, sans-serif;
+  width: 70%;
+  background-color: rgba(0, 0, 0, 0.8); /* Transparent black background */
+  padding: 20px;
+  box-sizing: border-box;
+  z-index: 1; /* Ensure it's above the video background */
+  text-align: left;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+</style>

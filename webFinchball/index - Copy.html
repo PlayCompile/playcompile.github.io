@@ -1,144 +1,160 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | PlayCompile Minigames</title>
-    <link rel="shortcut icon" href="TemplateData/favicon.ico">
-    <link rel="stylesheet" href="TemplateData/style.css">
-    <link rel="manifest" href="manifest.webmanifest">
-    
-    <style>
-      /* Rotate container to simulate landscape in portrait orientation */
-      .rotate-landscape {
-        transform: rotate(90deg);
-        transform-origin: center center;
-        width: 100vh;   /* Height of viewport in portrait */
-        height: 100vw;  /* Width of viewport in portrait */
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) rotate(90deg);
-      }
-    </style>
-  </head>
-  <body>
-    <div id="unity-container">
-      <canvas id="unity-canvas" width="960" height="600" tabindex="-1"></canvas>
-      <div id="unity-loading-bar">
-        <div id="unity-logo"></div>
-        <div id="unity-progress-bar-empty">
-          <div id="unity-progress-bar-full"></div>
-        </div>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>PlayCompile Finchball</title>
+  <link rel="shortcut icon" href="TemplateData/favicon.ico">
+  <link rel="stylesheet" href="TemplateData/style.css">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <style>
+    /* Rotate container to simulate landscape in portrait orientation */
+    .rotate-landscape {
+      transform: rotate(90deg);
+      transform-origin: center center;
+      width: 100vh;   /* Height of viewport in portrait */
+      height: 100vw;  /* Width of viewport in portrait */
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(90deg);
+    }
+  </style>
+</head>
+<body>
+  <div id="unity-container">
+    <canvas id="unity-canvas" width="1920" height="1080" tabindex="-1"></canvas>
+    <div id="unity-loading-bar">
+      <div id="unity-logo"></div>
+      <div id="unity-progress-bar-empty">
+        <div id="unity-progress-bar-full"></div>
       </div>
-      <div id="unity-warning"> </div>
     </div>
-    
-    <!-- JavaScript for Screen Orientation Lock, Canvas Resize, and Rotation -->
-    <script>
-      async function lockOrientation() {
-        try {
-          // Attempt to lock the screen orientation to landscape
-          if (screen.orientation && screen.orientation.lock) {
-            await screen.orientation.lock("landscape");
-            console.log("Screen orientation locked to landscape.");
-          } else {
-            console.warn("Orientation lock not supported on this device.");
-          }
-        } catch (error) {
-          console.error("Error locking screen orientation:", error);
-        }
-      }
+    <div id="unity-warning"> </div>
+  </div>
 
-      function adjustOrientation() {
-        const container = document.getElementById("unity-container");
+  <script>
+    var myGameInstance;
+    var myGameLoaded = false;
 
-        if (window.innerHeight > window.innerWidth) {
-          // Apply rotation class for portrait mode
-          container.classList.add("rotate-landscape");
+    async function lockOrientation() {
+      try {
+        if (screen.orientation && screen.orientation.lock) {
+          await screen.orientation.lock("landscape");
+          console.log("Screen orientation locked to landscape.");
         } else {
-          // Remove rotation class for landscape mode
-          container.classList.remove("rotate-landscape");
+          console.warn("Orientation lock not supported on this device.");
         }
+      } catch (error) {
+        console.error("Error locking screen orientation:", error);
       }
+    }
 
-      // Lock orientation on page load, adjust rotation, and resize canvas
-      window.addEventListener("load", () => {
-        lockOrientation();
-        adjustOrientation();
-      });
+    function adjustOrientation() {
+      const container = document.getElementById("unity-container");
+      const canvas = document.getElementById("unity-canvas");
 
-      // Listen for orientation changes and adjust accordingly
+      if (window.innerHeight > window.innerWidth) {
+        container.classList.add("rotate-landscape");
+        canvas.width = 1080;
+        canvas.height = 1920;
+        console.log("Canvas resized for portrait mode: 1080x1920");
+      } else {
+        container.classList.remove("rotate-landscape");
+        canvas.width = 1920;
+        canvas.height = 1080;
+        console.log("Canvas resized for landscape mode: 1920x1080");
+      }
+    }
+
+    function resizePage() {
+      const canvas = document.getElementById("unity-canvas");
+      if (myGameInstance !== undefined && myGameLoaded === true) {
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+        console.log("Game canvas resized to match window dimensions.");
+      }
+    }
+
+    window.addEventListener("load", () => {
+      lockOrientation();
+      adjustOrientation();
       window.addEventListener("resize", adjustOrientation);
-    </script>
+    });
+    window.addEventListener("resize", resizePage);
 
-    <!-- Main Unity WebGL Loader Script -->
-    <script>
-      window.addEventListener("load", function () {
-        if ("serviceWorker" in navigator) {
-          navigator.serviceWorker.register("ServiceWorker.js");
-        }
+    window.addEventListener("load", function () {
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("ServiceWorker.js");
+      }
+    });
+
+    var container = document.querySelector("#unity-container");
+    var canvas = document.querySelector("#unity-canvas");
+    var loadingBar = document.querySelector("#unity-loading-bar");
+    var progressBarFull = document.querySelector("#unity-progress-bar-full");
+    var warningBanner = document.querySelector("#unity-warning");
+
+    function unityShowBanner(msg, type) {
+      function updateBannerVisibility() {
+        warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+      }
+      var div = document.createElement('div');
+      div.innerHTML = msg;
+      warningBanner.appendChild(div);
+      if (type == 'error') div.style = 'background: red; padding: 10px;';
+      else {
+        if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+        setTimeout(function() {
+          warningBanner.removeChild(div);
+          updateBannerVisibility();
+        }, 5000);
+      }
+      updateBannerVisibility();
+    }
+
+    var buildUrl = "Build";
+    var loaderUrl = buildUrl + "/webFinchball.loader.js";
+    var config = {
+      arguments: [],
+      dataUrl: buildUrl + "/webFinchball.data",
+      frameworkUrl: buildUrl + "/webFinchball.framework.js",
+      codeUrl: buildUrl + "/webFinchball.wasm",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "PlayCompile",
+      productName: "PlayCompile Finchball",
+      productVersion: "0.1",
+      showBanner: unityShowBanner,
+    };
+
+    // Disable automatic size sync
+    config.matchWebGLToCanvasSize = false;
+
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      var meta = document.createElement('meta');
+      meta.name = 'viewport';
+      meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes, matchWebGLToCanvasSize=false';
+      document.getElementsByTagName('head')[0].appendChild(meta);
+    }
+
+    loadingBar.style.display = "block";
+
+    var script = document.createElement("script");
+    script.src = loaderUrl;
+    script.onload = () => {
+      createUnityInstance(canvas, config, (progress) => {
+        progressBarFull.style.width = 100 * progress + "%";
+      }).then((unityInstance) => {
+        myGameInstance = unityInstance;
+        myGameLoaded = true;
+        loadingBar.style.display = "none";
+        resizePage();  // Initial resize
+      }).catch((message) => {
+        alert(message);
       });
-
-      var container = document.querySelector("#unity-container");
-      var canvas = document.querySelector("#unity-canvas");
-      var loadingBar = document.querySelector("#unity-loading-bar");
-      var progressBarFull = document.querySelector("#unity-progress-bar-full");
-      var warningBanner = document.querySelector("#unity-warning");
-
-      function unityShowBanner(msg, type) {
-        function updateBannerVisibility() {
-          warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
-        }
-        var div = document.createElement('div');
-        div.innerHTML = msg;
-        warningBanner.appendChild(div);
-        if (type == 'error') div.style = 'background: red; padding: 10px;';
-        else {
-          if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
-          setTimeout(function() {
-            warningBanner.removeChild(div);
-            updateBannerVisibility();
-          }, 5000);
-        }
-        updateBannerVisibility();
-      }
-
-      var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/webFinchball.loader.js";
-      var config = {
-        arguments: [],
-        dataUrl: buildUrl + "/webFinchball.data",
-        frameworkUrl: buildUrl + "/webFinchball.framework.js",
-        codeUrl: buildUrl + "/webFinchball.wasm",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "PlayCompile",
-        productName: "PlayCompile Minigames",
-        productVersion: "0.1",
-        showBanner: unityShowBanner,
-      };
-
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        var meta = document.createElement('meta');
-        meta.name = 'viewport';
-        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-        document.getElementsByTagName('head')[0].appendChild(meta);
-      }
-
-      loadingBar.style.display = "block";
-
-      var script = document.createElement("script");
-      script.src = loaderUrl;
-      script.onload = () => {
-        createUnityInstance(canvas, config, (progress) => {
-          progressBarFull.style.width = 100 * progress + "%";
-        }).then((unityInstance) => {
-          loadingBar.style.display = "none";
-        }).catch((message) => {
-          alert(message);
-        });
-      };
-      document.body.appendChild(script);
-    </script>
-  </body>
+    };
+    document.body.appendChild(script);
+  </script>
+</body>
 </html>

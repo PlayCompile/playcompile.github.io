@@ -24,7 +24,7 @@
 </head>
 <body>
   <div id="unity-container">
-    <canvas id="unity-canvas" width="1920" height="1080" tabindex="-1"></canvas>
+    <canvas id="unity-canvas" width="1080" height="1920" tabindex="-1"></canvas>
     <div id="unity-loading-bar">
       <div id="unity-logo"></div>
       <div id="unity-progress-bar-empty">
@@ -51,38 +51,44 @@
       }
     }
 
-    function adjustOrientation() {
-      const container = document.getElementById("unity-container");
-      const canvas = document.getElementById("unity-canvas");
-
-      if (window.innerHeight > window.innerWidth) {
-        container.classList.add("rotate-landscape");
-        canvas.width = 1080;
-        canvas.height = 1920;
-        console.log("Canvas resized for portrait mode: 1080x1920");
-      } else {
-        container.classList.remove("rotate-landscape");
-        canvas.width = 1920;
-        canvas.height = 1080;
-        console.log("Canvas resized for landscape mode: 1920x1080");
+    function resizeFramebuffer() {
+      var canvas = document.getElementById("unity-canvas");
+      if (myGameInstance) {
+        const [width, height] = getRenderBufferSize(window.innerWidth, window.innerHeight);
+        canvas.width = width;
+        canvas.height = height;
+        console.log(`Framebuffer resized: ${width}x${height}`);
       }
     }
 
+    function resizeCanvas() {
+      var canvas = document.getElementById("unity-canvas");
+      const [width, height] = getSize(window.innerWidth, window.innerHeight);
+      canvas.style.width = width + "px";
+      canvas.style.height = height + "px";
+      console.log(`Canvas resized to display size: ${width}px x ${height}px`);
+    }
+
     function resizePage() {
-      const canvas = document.getElementById("unity-canvas");
-      if (myGameInstance !== undefined && myGameLoaded === true) {
-        canvas.style.width = window.innerWidth + 'px';
-        canvas.style.height = window.innerHeight + 'px';
-        console.log("Game canvas resized to match window dimensions.");
-      }
+      resizeFramebuffer();
+      resizeCanvas();
+    }
+
+    function getRenderBufferSize(windowWidth, windowHeight) {
+      // Here you can customize based on your device's rendering needs; we’ll return the full window size.
+      return [windowWidth, windowHeight];
+    }
+
+    function getSize(windowWidth, windowHeight) {
+      // This also returns the full window size; customize as needed.
+      return [windowWidth, windowHeight];
     }
 
     window.addEventListener("load", () => {
       lockOrientation();
-      adjustOrientation();
-      window.addEventListener("resize", adjustOrientation);
+      resizePage();
+      window.addEventListener("resize", resizePage);
     });
-    window.addEventListener("resize", resizePage);
 
     window.addEventListener("load", function () {
       if ("serviceWorker" in navigator) {
@@ -123,7 +129,7 @@
       codeUrl: buildUrl + "/webFinchball.wasm",
       streamingAssetsUrl: "StreamingAssets",
       companyName: "PlayCompile",
-      productName: "PlayCompile Finchball",
+      productName: "PlayCompile Minigames",
       productVersion: "0.1",
       showBanner: unityShowBanner,
     };

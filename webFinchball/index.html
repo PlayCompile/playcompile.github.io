@@ -7,6 +7,20 @@
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
     <link rel="manifest" href="manifest.webmanifest">
+    
+    <style>
+      /* Rotate container to simulate landscape in portrait orientation */
+      .rotate-landscape {
+        transform: rotate(90deg);
+        transform-origin: center center;
+        width: 100vh;   /* Height of viewport in portrait */
+        height: 100vw;  /* Width of viewport in portrait */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(90deg);
+      }
+    </style>
   </head>
   <body>
     <div id="unity-container">
@@ -20,7 +34,7 @@
       <div id="unity-warning"> </div>
     </div>
     
-    <!-- JavaScript for Screen Orientation Lock and Canvas Resize -->
+    <!-- JavaScript for Screen Orientation Lock, Canvas Resize, and Rotation -->
     <script>
       async function lockOrientation() {
         try {
@@ -36,30 +50,26 @@
         }
       }
 
-      function resizeCanvas() {
-        // Dynamically resize the Unity canvas for unsupported devices or when in portrait mode
-        const canvas = document.getElementById("unity-canvas");
+      function adjustOrientation() {
+        const container = document.getElementById("unity-container");
+
         if (window.innerHeight > window.innerWidth) {
-          // Portrait mode resizing
-          canvas.style.width = `${window.innerHeight}px`;
-          canvas.style.height = `${window.innerWidth}px`;
-          console.log("Resized canvas for portrait mode.");
+          // Apply rotation class for portrait mode
+          container.classList.add("rotate-landscape");
         } else {
-          // Landscape mode resizing
-          canvas.style.width = `${window.innerWidth}px`;
-          canvas.style.height = `${window.innerHeight}px`;
-          console.log("Resized canvas for landscape mode.");
+          // Remove rotation class for landscape mode
+          container.classList.remove("rotate-landscape");
         }
       }
 
-      // Lock orientation on page load and resize canvas
+      // Lock orientation on page load, adjust rotation, and resize canvas
       window.addEventListener("load", () => {
         lockOrientation();
-        resizeCanvas();
+        adjustOrientation();
       });
 
-      // Listen for orientation changes and resize the canvas accordingly
-      window.addEventListener("resize", resizeCanvas);
+      // Listen for orientation changes and adjust accordingly
+      window.addEventListener("resize", adjustOrientation);
     </script>
 
     <!-- Main Unity WebGL Loader Script -->

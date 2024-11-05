@@ -9,27 +9,31 @@
   <link rel="manifest" href="manifest.webmanifest">
 
   <style>
-    .portrait-mode {
-      transform: rotate(90deg);
-      transform-origin: center center;
-      width: 100vh;   /* Height of viewport in portrait */
-      height: 100vw;  /* Width of viewport in portrait */
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(90deg);
+    #unity-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
     }
-    .landscape-mode {
-      transform: none;
-      width: 100%;
-      height: 100%;
-      position: static;
+
+    /* Fixed landscape dimensions */
+    #unity-canvas {
+      width: 1920px;
+      height: 1080px;
+    }
+
+    /* Rotate content within the canvas for portrait mode */
+    .portrait-mode #unity-canvas {
+      transform: rotate(90deg) translate(0, -100%);
+      transform-origin: center center;
     }
   </style>
 </head>
 <body>
   <div id="unity-container">
-    <canvas id="unity-canvas" width="1080" height="1920" tabindex="-1"></canvas>
+    <canvas id="unity-canvas" width="1920" height="1080" tabindex="-1"></canvas>
     <div id="unity-loading-bar">
       <div id="unity-logo"></div>
       <div id="unity-progress-bar-empty">
@@ -56,60 +60,23 @@
       }
     }
 
-    function resizeFramebuffer() {
-      var canvas = document.getElementById("unity-canvas");
-      if (myGameInstance) {
-        const [width, height] = getRenderBufferSize(window.innerWidth, window.innerHeight);
-        canvas.width = width;
-        canvas.height = height;
-        console.log(`Framebuffer resized: ${width}x${height}`);
-      }
-    }
-
-    function resizeCanvas() {
-      var canvas = document.getElementById("unity-canvas");
-      const [width, height] = getSize(window.innerWidth, window.innerHeight);
-      canvas.style.width = width + "px";
-      canvas.style.height = height + "px";
-      console.log(`Canvas resized to display size: ${width}px x ${height}px`);
-    }
-
-    function resizePage() {
-      resizeFramebuffer();
-      resizeCanvas();
-    }
-
     function adjustOrientation() {
       const container = document.getElementById("unity-container");
-      const canvas = document.getElementById("unity-canvas");
 
+      // Apply rotation only if in portrait
       if (window.innerHeight > window.innerWidth) {
         container.classList.add("portrait-mode");
-        container.classList.remove("landscape-mode");
-        console.log("Portrait mode: Canvas rotated to landscape view.");
+        console.log("Portrait mode: Canvas rotated.");
       } else {
-        container.classList.add("landscape-mode");
         container.classList.remove("portrait-mode");
-        console.log("Landscape mode: Canvas in standard landscape view.");
+        console.log("Landscape mode: Canvas in standard orientation.");
       }
-    }
-
-    function getRenderBufferSize(windowWidth, windowHeight) {
-      return [windowWidth, windowHeight];
-    }
-
-    function getSize(windowWidth, windowHeight) {
-      return [windowWidth, windowHeight];
     }
 
     window.addEventListener("load", () => {
       lockOrientation();
-      resizePage();
       adjustOrientation();
-      window.addEventListener("resize", () => {
-        resizePage();
-        adjustOrientation();
-      });
+      window.addEventListener("resize", adjustOrientation);
     });
 
     window.addEventListener("load", function () {
@@ -176,8 +143,7 @@
         myGameInstance = unityInstance;
         myGameLoaded = true;
         loadingBar.style.display = "none";
-        resizePage();
-        adjustOrientation();
+        adjustOrientation(); // Reapply rotation once loaded
       }).catch((message) => {
         alert(message);
       });

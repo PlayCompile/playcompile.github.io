@@ -1,4 +1,4 @@
-const cacheName = "PlayCompile-PlayCompile Minigames-0.1";
+const cacheName = "PlayCompile-Hungry Paimon-0.1";
 const contentToCache = [
     "Build/webHHP.loader.js",
     "Build/webHHP.framework.js",

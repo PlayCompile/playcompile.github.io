@@ -9,31 +9,22 @@
   <link rel="manifest" href="manifest.webmanifest">
 
   <style>
-    #unity-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    /* Fixed landscape dimensions */
-    #unity-canvas {
-      width: 1920px;
-      height: 1080px;
-    }
-
-    /* Rotate content within the canvas for portrait mode */
-    .portrait-mode #unity-canvas {
-      transform: rotate(90deg) translate(0, -100%);
+    /* Rotate container to simulate landscape in portrait orientation */
+    .rotate-landscape {
+      transform: rotate(90deg);
       transform-origin: center center;
+      width: 100vh;   /* Height of viewport in portrait */
+      height: 100vw;  /* Width of viewport in portrait */
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(90deg);
     }
   </style>
 </head>
 <body>
   <div id="unity-container">
-    <canvas id="unity-canvas" width="1920" height="1080" tabindex="-1"></canvas>
+    <canvas id="unity-canvas" width="1080" height="1920" tabindex="-1"></canvas>
     <div id="unity-loading-bar">
       <div id="unity-logo"></div>
       <div id="unity-progress-bar-empty">
@@ -60,23 +51,43 @@
       }
     }
 
-    function adjustOrientation() {
-      const container = document.getElementById("unity-container");
-
-      // Apply rotation only if in portrait
-      if (window.innerHeight > window.innerWidth) {
-        container.classList.add("portrait-mode");
-        console.log("Portrait mode: Canvas rotated.");
-      } else {
-        container.classList.remove("portrait-mode");
-        console.log("Landscape mode: Canvas in standard orientation.");
+    function resizeFramebuffer() {
+      var canvas = document.getElementById("unity-canvas");
+      if (myGameInstance) {
+        const [width, height] = getRenderBufferSize(window.innerWidth, window.innerHeight);
+        canvas.width = width;
+        canvas.height = height;
+        console.log(`Framebuffer resized: ${width}x${height}`);
       }
+    }
+
+    function resizeCanvas() {
+      var canvas = document.getElementById("unity-canvas");
+      const [width, height] = getSize(window.innerWidth, window.innerHeight);
+      canvas.style.width = width + "px";
+      canvas.style.height = height + "px";
+      console.log(`Canvas resized to display size: ${width}px x ${height}px`);
+    }
+
+    function resizePage() {
+      resizeFramebuffer();
+      resizeCanvas();
+    }
+
+    function getRenderBufferSize(windowWidth, windowHeight) {
+      // Here you can customize based on your device's rendering needs; we’ll return the full window size.
+      return [windowWidth, windowHeight];
+    }
+
+    function getSize(windowWidth, windowHeight) {
+      // This also returns the full window size; customize as needed.
+      return [windowWidth, windowHeight];
     }
 
     window.addEventListener("load", () => {
       lockOrientation();
-      adjustOrientation();
-      window.addEventListener("resize", adjustOrientation);
+      resizePage();
+      window.addEventListener("resize", resizePage);
     });
 
     window.addEventListener("load", function () {
@@ -123,6 +134,7 @@
       showBanner: unityShowBanner,
     };
 
+    // Disable automatic size sync
     config.matchWebGLToCanvasSize = false;
 
     if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
@@ -143,7 +155,7 @@
         myGameInstance = unityInstance;
         myGameLoaded = true;
         loadingBar.style.display = "none";
-        adjustOrientation(); // Reapply rotation once loaded
+        resizePage();  // Initial resize
       }).catch((message) => {
         alert(message);
       });

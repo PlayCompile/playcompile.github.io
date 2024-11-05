@@ -24,7 +24,7 @@
   </head>
   <body>
     <div id="unity-container">
-      <canvas id="unity-canvas" width="960" height="600" tabindex="-1"></canvas>
+      <canvas id="unity-canvas" width="1920" height="1080" tabindex="-1"></canvas>
       <div id="unity-loading-bar">
         <div id="unity-logo"></div>
         <div id="unity-progress-bar-empty">
@@ -54,14 +54,14 @@
 
         if (window.innerHeight > window.innerWidth) {
           container.classList.add("rotate-landscape");
-          canvas.width = 600;
-          canvas.height = 960;
-          console.log("Canvas resized for portrait mode: 600x960");
+          canvas.width = 1080;
+          canvas.height = 1920;
+          console.log("Canvas resized for portrait mode: 1080x1920");
         } else {
           container.classList.remove("rotate-landscape");
-          canvas.width = 960;
-          canvas.height = 600;
-          console.log("Canvas resized for landscape mode: 960x600");
+          canvas.width = 1920;
+          canvas.height = 1080;
+          console.log("Canvas resized for landscape mode: 1920x1080");
         }
       }
 
@@ -123,7 +123,7 @@
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         var meta = document.createElement('meta');
         meta.name = 'viewport';
-        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes, matchWebGLToCanvasSize=false';
         document.getElementsByTagName('head')[0].appendChild(meta);
       }
 

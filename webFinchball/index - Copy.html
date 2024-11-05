@@ -52,20 +52,13 @@
 
       function adjustOrientation() {
         const container = document.getElementById("unity-container");
-        const canvas = document.getElementById("unity-canvas");
 
         if (window.innerHeight > window.innerWidth) {
-          // Portrait mode: apply rotation class and resize canvas for portrait aspect
+          // Apply rotation class for portrait mode
           container.classList.add("rotate-landscape");
-          canvas.width = 600;
-          canvas.height = 960;
-          console.log("Canvas resized for portrait mode: 600x960");
         } else {
-          // Landscape mode: remove rotation class and revert canvas size to landscape aspect
+          // Remove rotation class for landscape mode
           container.classList.remove("rotate-landscape");
-          canvas.width = 960;
-          canvas.height = 600;
-          console.log("Canvas resized for landscape mode: 960x600");
         }
       }
 

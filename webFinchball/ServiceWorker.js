@@ -1,4 +1,4 @@
-const cacheName = "PlayCompile-PlayCompile Minigames-0.1";
+const cacheName = "PlayCompile-PlayCompile Finchball-0.1";
 const contentToCache = [
     "Build/webFinchball.loader.js",
     "Build/webFinchball.framework.js",

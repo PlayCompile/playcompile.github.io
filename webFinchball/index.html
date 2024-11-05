@@ -34,11 +34,9 @@
       <div id="unity-warning"> </div>
     </div>
     
-    <!-- JavaScript for Screen Orientation Lock, Canvas Resize, and Rotation -->
     <script>
       async function lockOrientation() {
         try {
-          // Attempt to lock the screen orientation to landscape
           if (screen.orientation && screen.orientation.lock) {
             await screen.orientation.lock("landscape");
             console.log("Screen orientation locked to landscape.");
@@ -55,13 +53,11 @@
         const canvas = document.getElementById("unity-canvas");
 
         if (window.innerHeight > window.innerWidth) {
-          // Portrait mode: apply rotation class and resize canvas for portrait aspect
           container.classList.add("rotate-landscape");
           canvas.width = 600;
           canvas.height = 960;
           console.log("Canvas resized for portrait mode: 600x960");
         } else {
-          // Landscape mode: remove rotation class and revert canvas size to landscape aspect
           container.classList.remove("rotate-landscape");
           canvas.width = 960;
           canvas.height = 600;
@@ -69,17 +65,13 @@
         }
       }
 
-      // Lock orientation on page load, adjust rotation, and resize canvas
       window.addEventListener("load", () => {
         lockOrientation();
         adjustOrientation();
       });
-
-      // Listen for orientation changes and adjust accordingly
       window.addEventListener("resize", adjustOrientation);
     </script>
 
-    <!-- Main Unity WebGL Loader Script -->
     <script>
       window.addEventListener("load", function () {
         if ("serviceWorker" in navigator) {
@@ -124,6 +116,9 @@
         productVersion: "0.1",
         showBanner: unityShowBanner,
       };
+
+      // Disable automatic size sync
+      config.matchWebGLToCanvasSize = false;
 
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         var meta = document.createElement('meta');

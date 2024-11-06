@@ -1,30 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-<title>PlayCompile | Unity Minigame Tutorials - Playable Demos, Downloads & Live Q&A streams</title>
 <head>
+  <title>PlayCompile | Unity Minigame Tutorials</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-<link rel="icon" href="favicon.ico" type="image/x-icon">
-<!-- Meta Description --><meta name="description" content="Learn to create minigames in Unity with step-by-step tutorials, playable demos, downloadable project files, and live stream Q&A sessions. Perfect for aspiring game developers."><!-- Meta Keywords --><meta name="keywords" content="Unity tutorials, game development, minigames, Unity minigame tutorials, Unity game development, downloadable project files, playable demos, live stream Q&A, PlayCompile"><!-- Author --><meta name="author" content="PlayCompile"><!-- Robots (default is to index and follow) --><meta name="robots" content="index, follow">
-<!-- Social Media Sharing --><!-- Open Graph tags for Facebook --><meta property="og:title" content="Unity Minigame Tutorials - Playable Demos, Downloads & Live Q&A | PlayCompile"><meta property="og:description" content="Learn to create minigames in Unity with step-by-step tutorials, playable demos, downloadable project files, and live stream Q&A sessions."><meta property="og:image" content="logo.png"><meta property="og:url" content="https://playcompile.com"><meta property="og:type" content="website"><!-- Twitter Card tags --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Unity Minigame Tutorials - Playable Demos, Downloads & Live Q&A | PlayCompile"><meta name="twitter:description" content="Learn to create minigames in Unity with step-by-step tutorials, playable demos, downloadable project files, and live stream Q&A sessions."><meta name="twitter:image" content="logo.png">
-<link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Ensure the body and html take the full height of the viewport */
+    html, body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    /* Container for video or image background */
+    .background-container {
+      position: fixed; /* Fixed position to cover entire viewport */
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1; /* Send background behind other content */
+    }
+
+    /* Video background styling */
+    .video-background {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none; /* Hidden initially for mobile */
+    }
+
+    /* Static image background for mobile */
+    .image-background {
+      background-image: url('/mobBackground.jpg'); /* Replace with correct path */
+      background-size: cover;
+      background-position: center;
+      width: 100%;
+      height: 100%;
+      display: none; /* Hidden initially for desktop */
+    }
+
+    /* Ensure menu is on top of the background */
+    #menu {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
 </head>
 <body>
-<video autoplay muted loop playsinline class="video-background">
-  <source src="website.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-<div id="menu">
-<script>
-    fetch('../menu.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('menu').innerHTML = data;
-        });
-</script>
+
+<div class="background-container">
+  <!-- Static image for mobile (displayed on smaller screens) -->
+  <div class="image-background" id="imageBackground"></div>
+
+  <!-- Video background for larger screens (displayed on wider screens) -->
+  <video autoplay muted loop playsinline class="video-background" id="videoBackground">
+    <source src="/website.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
 </div>
+
+<div id="menu">
+  <script>
+    fetch('/menu.html')
+      .then(response => response.text())
+      .then(data => {
+          document.getElementById('menu').innerHTML = data;
+      });
+  </script>
+</div>
+
+<script>
+  // Function to toggle video and image backgrounds based on screen width
+  function adjustBackground() {
+    const video = document.getElementById('videoBackground');
+    const imageBg = document.getElementById('imageBackground');
+
+    if (window.innerWidth > 768) {
+      // Show video for wider screens
+      video.style.display = 'block';
+      imageBg.style.display = 'none';
+    } else {
+      // Show static image for smaller screens
+      video.style.display = 'none';
+      imageBg.style.display = 'block';
+    }
+  }
+
+  // Initial check and event listener for screen resizing
+  adjustBackground();
+  window.addEventListener('resize', adjustBackground);
+</script>
+
 </body>
 </html>

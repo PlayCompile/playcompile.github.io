@@ -1,9 +1,9 @@
 const cacheName = "PlayCompile-Winter Games-0.1";
 const contentToCache = [
-    "Build/winter.loader.js",
-    "Build/winter.framework.js",
-    "Build/winter.data",
-    "Build/winter.wasm",
+    "Build/web000.loader.js",
+    "Build/web000.framework.js",
+    "Build/web000.data",
+    "Build/web000.wasm",
     "TemplateData/style.css"
 
 ];

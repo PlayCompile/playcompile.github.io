@@ -1,0 +1,4 @@
+1
+12
+C:\Program Files\PlayCompile\Murder Investigation
+https://github.com/PlayCompile/Murder-Investigation/tree/main/Launcher
